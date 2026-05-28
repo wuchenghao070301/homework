@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D 汉诺塔 | 益智小游戏</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- 游戏标题 -->
+        <header class="game-header">
+            <h1>🎮 3D 汉诺塔</h1>
+        </header>
+
+        <!-- 控制面板 -->
+        <section class="control-panel">
+            <div class="disk-control">
+                <label>圆盘数量 (3-8):</label>
+                <input 
+                    type="range" 
+                    id="diskSlider" 
+                    min="3" 
+                    max="8" 
+                    value="5"
+                >
+                <input 
+                    type="number" 
+                    id="diskInput" 
+                    min="3" 
+                    max="8" 
+                    value="5"
+                >
+            </div>
+
+            <div class="stats">
+                <span>步数: <span id="moveCount">0</span></span>
+            </div>
+
+            <div class="buttons">
+                <button id="resetBtn">重置游戏</button>
+                <button id="autoSolveBtn">自动求解</button>
+            </div>
+        </section>
+
+        <!-- 3D 游戏棋盘 -->
+        <main class="game-board" id="gameBoard">
+            <div class="peg" data-peg="0"></div>
+            <div class="peg" data-peg="1"></div>
+            <div class="peg" data-peg="2"></div>
+        </main>
+
+        <!-- 警告/胜利提示 -->
+        <div class="message-box" id="messageBox"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

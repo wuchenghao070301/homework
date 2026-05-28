@@ -1,0 +1,214 @@
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial Rounded MT Bold', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #87CEEB 0%, #E6E6FA 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* 游戏容器 */
+.game-container {
+    width: 100%;
+    max-width: 900px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* 标题 */
+.game-header h1 {
+    text-align: center;
+    color: #4A4A8A;
+    margin-bottom: 20px;
+    font-size: 2.2rem;
+}
+
+/* 控制面板 */
+.control-panel {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 12px;
+}
+
+.disk-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.disk-control input {
+    padding: 6px 10px;
+    border: 2px solid #4A4A8A;
+    border-radius: 8px;
+    width: 60px;
+    text-align: center;
+}
+
+.stats span {
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: bold;
+}
+
+.buttons button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    background: #4A4A8A;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.buttons button:hover {
+    background: #6A6AAA;
+}
+
+.buttons button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+/* 3D 游戏棋盘核心 */
+.game-board {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    padding-bottom: 20px;
+    perspective: 1000px; /* 3D 透视 */
+    background: linear-gradient(to bottom, #D9C5B4 0%, #B9A18D 100%);
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+/* 3D 柱子 */
+.peg {
+    position: relative;
+    width: 16px;
+    height: 220px;
+    background: linear-gradient(to right, #8B4513, #A0522D, #8B4513);
+    border-radius: 8px;
+    transform-style: preserve-3d;
+    transform: rotateX(20deg);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.peg::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 16px;
+    background: #CD853F;
+    border-radius: 50%;
+}
+
+.peg:hover {
+    transform: rotateX(20deg) translateZ(10px);
+}
+
+/* 3D 圆盘 */
+.disk {
+    position: absolute;
+    height: 28px;
+    border-radius: 14px;
+    left: 50%;
+    transform: translateX(-50%) rotateX(20deg);
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+/* 彩虹配色 */
+.disk-1 { background: linear-gradient(to top, #FF6B6B, #FF8E8E); width: 60px; }
+.disk-2 { background: linear-gradient(to top, #FFA500, #FFC14D); width: 85px; }
+.disk-3 { background: linear-gradient(to top, #FFD93D, #FFE570); width: 110px; }
+.disk-4 { background: linear-gradient(to top, #6BCF7F, #8DE49D); width: 135px; }
+.disk-5 { background: linear-gradient(to top, #4D9FFF, #70B3FF); width: 160px; }
+.disk-6 { background: linear-gradient(to top, #7A67EE, #9B89FF); width: 170px; }
+.disk-7 { background: linear-gradient(to top, #9370DB, #B89FEE); width: 175px; }
+.disk-8 { background: linear-gradient(to top, #FF69B4, #FF8FC8); width: 180px; }
+
+/* 选中状态 */
+.disk.selected {
+    transform: translateX(-50%) rotateX(20deg) translateZ(30px);
+    box-shadow: 0 0 20px #FFD700;
+}
+
+/* 消息框 */
+.message-box {
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.message-box.show {
+    opacity: 1;
+}
+
+.warning {
+    background: #FFE5E5;
+    color: #D32F2F;
+    animation: shakeWarning 0.5s ease-in-out;
+}
+
+.success {
+    background: #E8F5E8;
+    color: #2E7D32;
+    animation: glowWin 1s infinite alternate;
+}
+
+/* 关键帧动画 - 必须实现 */
+@keyframes shakeWarning {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+}
+
+@keyframes glowWin {
+    from { box-shadow: 0 0 10px gold; }
+    to { box-shadow: 0 0 25px gold; }
+}
+
+@keyframes diskFloat {
+    0% { transform: translateX(-50%) rotateX(20deg) translateZ(0); }
+    50% { transform: translateX(-50%) rotateX(20deg) translateZ(40px); }
+    100% { transform: translateX(-50%) rotateX(20deg) translateZ(0); }
+}
+
+/* 响应式适配 */
+@media (max-width: 600px) {
+    .game-board { height: 280px; }
+    .peg { height: 180px; }
+    .disk { height: 24px; }
+    .control-panel { flex-direction: column; gap: 10px; }
+}
